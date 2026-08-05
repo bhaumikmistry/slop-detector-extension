@@ -1,0 +1,21 @@
+{
+  "name": "slop-detector",
+  "version": "1.0.0",
+  "description": "Chrome MV3 extension that badges posts on x.com/twitter.com with an AI-writing-likelihood score and shows the lines that scored.",
+  "license": "MIT",
+  "author": "Bhaumik Mistry",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "watch": "node build.mjs --watch",
+    "test": "tsx --test src/detector/*.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "esbuild": "^0.23.0",
+    "tsx": "^4.16.0",
+    "typescript": "^5.5.0",
+    "@types/node": "^20.14.0"
+  }
+}

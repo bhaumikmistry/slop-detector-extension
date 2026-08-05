@@ -1,0 +1,92 @@
+/* Slop Detector badge styles. Namespaced with .slopd- to avoid clashing with X. */
+
+.slopd-badge-wrap {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.slopd-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  cursor: default;
+  user-select: none;
+  border: 1px solid transparent;
+  transition: filter 0.12s ease;
+}
+.slopd-badge:hover { filter: brightness(1.05); }
+
+.slopd-badge__icon { font-size: 11px; }
+.slopd-badge__label { letter-spacing: 0.2px; }
+
+/* Verdict colors — tuned for both light and dark X themes. */
+.slopd-badge--human {
+  background: rgba(0, 186, 124, 0.15);
+  color: #00875a;
+  border-color: rgba(0, 186, 124, 0.4);
+}
+.slopd-badge--unclear {
+  background: rgba(255, 196, 0, 0.15);
+  color: #b58900;
+  border-color: rgba(255, 196, 0, 0.45);
+}
+.slopd-badge--likely {
+  background: rgba(255, 122, 0, 0.16);
+  color: #d35400;
+  border-color: rgba(255, 122, 0, 0.5);
+}
+.slopd-badge--ai {
+  background: rgba(244, 33, 46, 0.16);
+  color: #e0245e;
+  border-color: rgba(244, 33, 46, 0.5);
+}
+
+@media (prefers-color-scheme: dark) {
+  .slopd-badge--human { color: #23d18b; }
+  .slopd-badge--unclear { color: #f5d76e; }
+  .slopd-badge--likely { color: #ff9f45; }
+  .slopd-badge--ai { color: #ff6b81; }
+}
+
+/* Badge is a real button now — neutralize X's button styling. */
+.slopd-badge {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  cursor: pointer;
+}
+.slopd-badge:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* Quiet mode: no tells found. Just a faded tick — the score appears on hover,
+   and clicking still opens the panel explaining why nothing fired. */
+.slopd-badge--quiet {
+  background: transparent;
+  border-color: transparent;
+  opacity: 0.32;
+  padding: 1px 3px;
+}
+.slopd-badge--quiet .slopd-badge__label {
+  display: none;
+}
+.slopd-badge--quiet:hover,
+.slopd-badge--quiet:focus-visible,
+.slopd-badge--quiet[aria-expanded="true"] {
+  opacity: 1;
+}
+.slopd-badge--quiet:hover .slopd-badge__label,
+.slopd-badge--quiet:focus-visible .slopd-badge__label,
+.slopd-badge--quiet[aria-expanded="true"] .slopd-badge__label {
+  display: inline;
+}
