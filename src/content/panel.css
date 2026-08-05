@@ -1,0 +1,141 @@
+/* ------------------------------------------------------------------ *
+ * Panel — opened by clicking the badge. Appended to <body> and placed
+ * in viewport coordinates, so X's clipping and transforms can't crop it.
+ * ------------------------------------------------------------------ */
+
+/* The host element carries the positioning; everything below lives inside a
+   shadow root, isolated from X's stylesheets and stacking contexts. */
+:host {
+  position: fixed;
+  z-index: 2147483647;
+  top: 0;
+  left: 0;
+}
+* { box-sizing: border-box; }
+
+.slopd-panel {
+  width: 360px;
+  max-width: calc(100vw - 16px);
+  max-height: min(60vh, 520px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #15202b;
+  color: #e7e9ea;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px;
+  line-height: 1.45;
+  text-align: left;
+  white-space: normal;
+}
+
+@media (prefers-color-scheme: light) {
+  .slopd-panel {
+    background: #ffffff;
+    color: #0f1419;
+    border-color: rgba(0, 0, 0, 0.14);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.18);
+  }
+}
+
+.slopd-panel__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding-right: 20px;
+}
+.slopd-panel__verdict { font-weight: 700; }
+.slopd-panel__verdict--human { color: #23d18b; }
+.slopd-panel__verdict--unclear { color: #d9a800; }
+.slopd-panel__verdict--likely-ai { color: #ff9f45; }
+.slopd-panel__verdict--ai { color: #ff6b81; }
+.slopd-panel__score {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.65;
+  white-space: nowrap;
+}
+
+.slopd-panel__close {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: none;
+  border: 0;
+  color: inherit;
+  opacity: 0.5;
+  font-size: 18px;
+  line-height: 1;
+  padding: 2px 4px;
+  cursor: pointer;
+}
+.slopd-panel__close:hover { opacity: 1; }
+
+.slopd-panel__lead,
+.slopd-panel__none {
+  margin-top: 6px;
+  opacity: 0.7;
+  font-size: 12px;
+}
+
+.slopd-panel__body { margin-top: 8px; }
+
+.slopd-hit + .slopd-hit {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(128, 128, 128, 0.25);
+}
+.slopd-hit__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+.slopd-hit__label { font-weight: 600; }
+.slopd-hit__pts {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.6;
+  white-space: nowrap;
+}
+
+.slopd-quote {
+  margin: 5px 0 0;
+  padding: 5px 8px;
+  border-left: 2px solid rgba(128, 128, 128, 0.45);
+  border-radius: 0 6px 6px 0;
+  background: rgba(128, 128, 128, 0.1);
+  font-size: 12px;
+  opacity: 0.9;
+}
+.slopd-mark {
+  background: rgba(255, 159, 69, 0.32);
+  color: inherit;
+  border-radius: 3px;
+  padding: 0 2px;
+  font-weight: 600;
+}
+
+.slopd-hit__more,
+.slopd-panel__more {
+  margin-top: 5px;
+  font-size: 11px;
+  opacity: 0.55;
+}
+.slopd-hit__why {
+  margin-top: 5px;
+  font-size: 11.5px;
+  opacity: 0.62;
+}
+
+.slopd-panel__foot {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(128, 128, 128, 0.25);
+  font-size: 11px;
+  opacity: 0.5;
+}

@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Slop Detector — AI writing tells",
+  "version": "1.0.0",
+  "description": "Scores each post on how AI-written it looks and shows the exact lines that scored. Works on x.com and twitter.com.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://x.com/*", "https://twitter.com/*"],
+      "js": ["dist/content.js"],
+      "css": ["dist/content.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}
