@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+
+      # The manifest is the one file no test covers and every Chrome Web Store
+      # rejection starts with. Check the limits the store actually enforces.
+      - name: Validate manifest
+        run: |
+          node --input-type=module -e '
+            import { readFileSync } from "node:fs";
+            const m = JSON.parse(readFileSync("manifest.json", "utf8"));
+            const fail = [];
+            if (m.manifest_version !== 3) fail.push("manifest_version must be 3");
+            if (!m.name || m.name.length > 45) fail.push(`name is ${m.name?.length} chars (max 45)`);
+            if (!m.description || m.description.length > 132) fail.push(`description is ${m.description?.length} chars (max 132)`);
+            if (!/^\d+\.\d+(\.\d+)?(\.\d+)?$/.test(m.version)) fail.push(`version "${m.version}" is not a valid store version`);
+            for (const f of [...Object.values(m.icons ?? {}), ...(m.content_scripts ?? []).flatMap(c => [...(c.js ?? []), ...(c.css ?? [])])]) {
+              try { readFileSync(f); } catch { fail.push(`missing file referenced by manifest: ${f}`); }
+            }
+            if (fail.length) { console.error("manifest problems:\n  " + fail.join("\n  ")); process.exit(1); }
+            console.log(`manifest OK — ${m.name} v${m.version}, ${m.content_scripts[0].matches.length} host matches, permissions: ${(m.permissions ?? []).join(",") || "none"}`);
+          '
+
+  package:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run package
+      # Anyone can grab this from the run's artifacts and Load unpacked it,
+      # without needing a toolchain.
+      - uses: actions/upload-artifact@v4
+        with:
+          name: slop-detector-extension
+          path: build/slop-detector-extension.zip
+          if-no-files-found: error
