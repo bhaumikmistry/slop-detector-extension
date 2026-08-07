@@ -9,14 +9,19 @@
   "scripts": {
     "build": "node build.mjs",
     "watch": "node build.mjs --watch",
-    "test": "tsx --test src/detector/*.test.ts",
+    "test": "npm run build && tsx --test src/content/*.test.ts",
     "typecheck": "tsc --noEmit",
     "package": "npm run build && node package.mjs"
   },
   "devDependencies": {
+    "@types/jsdom": "^28.0.3",
+    "@types/node": "^20.14.0",
     "esbuild": "^0.23.0",
+    "jsdom": "^30.0.1",
     "tsx": "^4.16.0",
-    "typescript": "^5.5.0",
-    "@types/node": "^20.14.0"
+    "typescript": "^5.5.0"
+  },
+  "dependencies": {
+    "@slop-detector/slop-detector": "^0.1.0"
   }
 }

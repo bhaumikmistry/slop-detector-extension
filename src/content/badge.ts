@@ -13,8 +13,8 @@
  */
 
 import panelCss from "./panel.css";
-import { HANDLE_TOKEN, HASHTAG_TOKEN } from "../detector";
-import type { DetectionResult, SignalHit, Verdict } from "../detector";
+import { HANDLE_TOKEN, HASHTAG_TOKEN } from "@slop-detector/slop-detector";
+import type { DetectionResult, SignalHit, Verdict } from "@slop-detector/slop-detector";
 
 const VERDICT_CLASS: Record<Verdict, string> = {
   human: "slopd-badge--human",

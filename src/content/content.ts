@@ -12,7 +12,7 @@
  *    a badge React wiped during a re-render is put back.
  */
 
-import { detectAiText } from "../detector";
+import { detectAiText } from "@slop-detector/slop-detector";
 import { createBadge } from "./badge";
 
 /** Hash of the text the current badge was built from ("none" = nothing to score). */
