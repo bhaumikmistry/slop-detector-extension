@@ -3,7 +3,7 @@
 A Chrome (Manifest V3) extension that puts a small **`AI xx%`** badge next to
 every post on **x.com / twitter.com**, estimating how likely the text was
 AI-assisted, and showing you the exact lines that scored. The scoring engine
-is [`@bhaumikmistry/slop-detector`](https://www.npmjs.com/package/@bhaumikmistry/slop-detector),
+is [`@slop-detector/slop-detector`](https://www.npmjs.com/package/@slop-detector/slop-detector),
 a standalone, dependency-free TypeScript library that ports the heuristics
 from the [`not-ai` skill](https://github.com/bhaumikmistry/bhaumik-agent-skills/tree/main/skills/not-ai)
 — the same anti-patterns the skill teaches you to *remove* are the ones we
