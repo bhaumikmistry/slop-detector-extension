@@ -177,7 +177,8 @@ dist/                    build output (generated)
 - Only the tweet author's primary text is scored — quoted tweets and images are
   ignored.
 - Everything runs locally in the page. No network calls, no data leaves the
-  browser.
+  browser. See [PRIVACY.md](PRIVACY.md) — the claims there are mechanically
+  checkable against the shipped build, and the file says how.
 
 ---
 
