@@ -4,6 +4,9 @@
   "description": "Chrome MV3 extension that badges posts on x.com/twitter.com with an AI-writing-likelihood score and shows the lines that scored.",
   "license": "MIT",
   "author": "Bhaumik Mistry",
+  "engines": {
+    "node": ">=22.22.2"
+  },
   "private": true,
   "type": "module",
   "scripts": {
