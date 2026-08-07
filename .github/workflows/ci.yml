@@ -10,8 +10,14 @@ jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
+      # Report every version's result rather than cancelling siblings on the
+      # first failure — one red job should not hide whether the others passed.
+      fail-fast: false
       matrix:
-        node: [20, 22]
+        # jsdom 30 requires ^22.22.2 || ^24.15.0 || >=26, and Node 20 went
+        # end-of-life in April 2026. This is a dev toolchain only; the extension
+        # itself runs in Chrome.
+        node: [22, 24]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
