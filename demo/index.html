@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Slop Detector — demo timeline</title>
+<!-- The real built stylesheet, so badges look exactly as they do in Chrome. -->
+<link rel="stylesheet" href="../dist/content.css">
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #000;
+    color: #e7e9ea;
+    font: 15px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  .banner {
+    background: #1d9bf0; color: #fff; text-align: center;
+    padding: 6px 12px; font-size: 13px; font-weight: 600;
+  }
+  .banner a { color: #fff; }
+  .col { max-width: 600px; margin: 0 auto; border-inline: 1px solid #2f3336; min-height: 100vh; }
+  .head {
+    position: sticky; top: 0; z-index: 5; backdrop-filter: blur(12px);
+    background: rgba(0,0,0,.65); border-bottom: 1px solid #2f3336;
+    padding: 14px 16px; font-size: 20px; font-weight: 800;
+  }
+  article {
+    display: flex; gap: 12px; padding: 12px 16px;
+    border-bottom: 1px solid #2f3336; cursor: pointer;
+  }
+  article:hover { background: #080808; }
+  .avatar {
+    flex: 0 0 40px; height: 40px; border-radius: 50%;
+    display: grid; place-items: center; font-weight: 700; color: #fff; font-size: 15px;
+  }
+  .body { flex: 1; min-width: 0; }
+  .row { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+  .name { font-weight: 700; }
+  .handle, .dot, time { color: #71767b; }
+  [data-testid="tweetText"] { margin: 2px 0 10px; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .footer { display: flex; align-items: center; }
+  [role="group"] { display: flex; gap: 42px; color: #71767b; font-size: 13px; }
+  [role="group"] span:hover { color: #1d9bf0; }
+  .verified { color: #1d9bf0; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<div class="banner">
+  Local demo fixture — fictional accounts and posts, not a real timeline.
+</div>
+
+<div class="col">
+  <div class="head">Home</div>
+  <div id="timeline"></div>
+</div>
+
+<script>
+// Fictional accounts. No real people, no real handles.
+const PEOPLE = [
+  ["Maya Ortiz", "mayabuilds", "#f4212e"],
+  ["Devon Park", "devonp", "#1d9bf0"],
+  ["Priya Raman", "priya_r", "#00ba7c"],
+  ["Sam Whitfield", "samw", "#7856ff"],
+  ["Nina Kowalski", "ninakow", "#ffd400"],
+  ["Tom Adeyemi", "tomade", "#ff7a00"],
+  ["Rae Lindqvist", "raelind", "#f91880"],
+  ["Ibrahim Nasser", "ibrahimn", "#00b0d8"],
+  ["Chloe Beaumont", "chloeb", "#8b5cf6"],
+  ["Marcus Hale", "mhale", "#22c55e"],
+];
+
+// A deliberate spread: plain human posts that should stay quiet, obvious slop
+// that should light up, and middling cases in between.
+const POSTS = [
+  "just got back from lunch, the tacos were great lol",
+
+  "In the realm of technology, this groundbreaking platform serves as a testament to innovation. It's not just a tool, but a vibrant tapestry of possibilities.",
+
+  "spent 3 hours debugging only to find i was on the wrong branch. classic.",
+
+  "Thrilled to announce that I'm joining the founding team from day one. This isn't \"another startup.\" It's an attempt to rewrite the operating system of an entire industry.\n\n#BuildingTheFuture #Startups #Innovation",
+
+  "why does every airline app have the worst possible date picker",
+
+  "As we navigate this ever-evolving landscape, it's important to note that leveraging cutting-edge solutions can unlock unprecedented value for stakeholders.",
+
+  "we cut p99 latency from 1.2s to 340ms by moving the JSON parse off the hot path. no rewrite, no new infra.",
+
+  "Let's delve into the intricate world of quantum computing — a realm where the impossible becomes possible. In conclusion, the future is bright.",
+
+  "my kid asked why the moon follows the car and i did not have a good answer",
+
+  "This meticulously crafted product showcases a myriad of innovative, dynamic, and transformative features, highlighting the importance of seamless integration.",
+
+  "hot take: your standup is a status report with extra steps",
+
+  "Experts argue that remote work plays a pivotal role in fostering a more holistic and nuanced approach to work-life balance in today's fast-paced world.",
+
+  "reading the postgres docs on MVCC for the third time and finally something clicked — vacuum isn't garbage collection, it's tombstone cleanup",
+
+  "Nestled in the heart of the city, this renowned venue boasts a rich history and a diverse array of world-class experiences.",
+
+  "watched dune part two again. still holds up. the sound design is unreal.",
+
+  "Small businesses are the backbone of our economy. They foster community, drive innovation, and elevate local culture in profound ways.",
+
+  "unpopular opinion but tabs vs spaces was never the real issue, inconsistent formatters were",
+
+  "Despite these challenges, the future looks bright. Let's explore why this underscores the importance of a comprehensive approach.",
+
+  "genuinely think the best engineers i've worked with were the ones who deleted the most code",
+
+  "Here's the thing: it's not about the tools you use, it's about the mindset you bring. Success is a journey, not a destination.",
+
+  "the talk covered caching, indexing, and sharding — all the greatest hits",
+
+  "I'm proud to share that our commitment to excellence continues to enhance outcomes for individuals across various sectors.",
+
+  "shipped the fix. turned out the cache key was wrong. moving on.",
+
+  "This game-changing, state-of-the-art solution is a testament to what happens when visionary thinking meets meticulous execution.",
+];
+
+const TIMES = ["2m", "14m", "38m", "1h", "2h", "3h", "5h", "8h", "11h", "1d"];
+
+function initials(name) {
+  return name.split(" ").map((w) => w[0]).join("").slice(0, 2);
+}
+
+const tl = document.getElementById("timeline");
+POSTS.forEach((text, i) => {
+  const [name, handle, color] = PEOPLE[i % PEOPLE.length];
+  const art = document.createElement("article");
+  // The selectors the content script looks for, matching X's markup.
+  art.setAttribute("data-testid", "tweet");
+  art.innerHTML = `
+    <div class="avatar" style="background:${color}">${initials(name)}</div>
+    <div class="body">
+      <div class="row">
+        <span class="name">${name}</span>
+        ${i % 3 === 0 ? '<span class="verified">✔</span>' : ""}
+        <span class="handle">@${handle}</span>
+        <span class="dot">·</span>
+        <time datetime="2026-08-08T12:00:00.000Z">${TIMES[i % TIMES.length]}</time>
+      </div>
+      <div data-testid="tweetText"></div>
+      <div class="footer">
+        <div role="group">
+          <span>💬 ${(i * 7) % 40}</span>
+          <span>🔁 ${(i * 3) % 25}</span>
+          <span>♡ ${(i * 13) % 300}</span>
+          <span>📊 ${(i * 137) % 9000}</span>
+        </div>
+      </div>
+    </div>`;
+  // textContent, not innerHTML — the post bodies are data, not markup.
+  art.querySelector('[data-testid="tweetText"]').textContent = text;
+  tl.appendChild(art);
+});
+
+// Clicking a post shouldn't do anything here, but X navigates on click, so keep
+// the shape honest: the badge must stop propagation to avoid it.
+tl.addEventListener("click", (e) => {
+  if (e.target.closest("[data-slopd-wrap]")) return;
+});
+</script>
+
+<!-- The real built content script, exactly as shipped. -->
+<script src="../dist/content.js"></script>
+</body>
+</html>

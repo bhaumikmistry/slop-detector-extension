@@ -14,7 +14,8 @@
     "watch": "node build.mjs --watch",
     "test": "npm run build && tsx --test src/content/*.test.ts",
     "typecheck": "tsc --noEmit",
-    "package": "npm run build && node package.mjs"
+    "package": "npm run build && node package.mjs",
+    "demo": "npm run build && node demo/serve.mjs"
   },
   "devDependencies": {
     "@types/jsdom": "^28.0.3",
