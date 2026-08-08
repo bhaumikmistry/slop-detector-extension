@@ -11,26 +11,29 @@ Privacy policy URL:
 ## Name
 
 ```
-Slop Detector — AI writing tells
+Slop Detector — spot AI-style slop
 ```
 
-32 characters (limit 45). Deliberately does **not** lead with "for X" or use X
+34 characters (limit 45). Deliberately does **not** lead with "for X" or use X
 branding: store policy forbids listings that imply affiliation with another
 brand, and that is the most common avoidable rejection.
 
 ## Short description (132 char limit)
 
 ```
-Scores each post on how AI-written it looks and shows the exact lines that scored. Works on x.com and twitter.com.
+Scores each post on how much it reads like slop and shows the exact lines that scored. Works on x.com and twitter.com.
 ```
 
-114 characters. Matches `manifest.json` exactly — CI enforces the limit.
+118 characters. Says *slop*, not *AI-written* — that is what it measurably
+detects, and overclaiming here is what earns one-star "it doesn't detect AI"
+reviews. Matches `manifest.json` exactly — CI enforces the limit.
 
 ## Detailed description
 
 ```
 Slop Detector puts a small badge next to every post on x.com and twitter.com,
-scoring 0–100 how much the writing looks machine-generated.
+scoring 0–100 how much the writing reads like slop — promotional, essay-like,
+machine-flavoured prose.
 
 Click any badge and it shows its work: which patterns fired, what each one cost,
 why it is a tell, and the actual line from the post with the matched words
@@ -53,12 +56,19 @@ Wikipedia's "Signs of AI writing":
 Posts with no tells get a quiet tick rather than a loud badge, so only the
 things worth noticing draw your eye.
 
-AN HONEST WARNING
+WHAT IT IS NOT
 
-This is a heuristic, not proof. It detects writing patterns, and the link
-between patterns and authorship is loose in both directions: a person writing in
-marketing register scores high, and an AI told to write plainly scores zero. A
-high score means "this reads like machine writing" — nothing more.
+This is not an AI detector, and it does not claim to be. It was measured against
+3,500 AI-generated tweets from seven models and 20,000 real human tweets:
+
+• It almost never flags a human wrongly — 0.04% false positives
+• It finds marketing and essay register well — around 75%
+• It misses AI that writes casually — 97% of tweets from a current model scored
+  zero
+
+So it answers "does this read like slop?", not "was this written by a machine?"
+The full evaluation, including the failures and two dataset traps, is published
+in the repository.
 
 Please do not use it to accuse anyone of anything.
 
@@ -87,8 +97,8 @@ add-on.
 
 ```
 Slop Detector has one purpose: to annotate posts on x.com and twitter.com with a
-heuristic score estimating how much the text reads like AI-generated writing, and
-to show the user which specific phrases produced that score.
+heuristic score estimating how much the text reads like promotional, essay-like
+"slop" writing, and to show the user which specific phrases produced that score.
 ```
 
 ## Permission justifications

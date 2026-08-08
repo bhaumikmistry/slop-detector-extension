@@ -1,15 +1,35 @@
-# Slop Detector — AI writing tells
+# Slop Detector — spot AI-style slop writing
 
-A Chrome (Manifest V3) extension that puts a small **`AI xx%`** badge next to
-every post on **x.com / twitter.com**, estimating how likely the text was
-AI-assisted, and showing you the exact lines that scored. The scoring engine
-is [`@slop-detector/slop-detector`](https://www.npmjs.com/package/@slop-detector/slop-detector),
-a standalone, dependency-free TypeScript library that ports the heuristics
-from the [`not-ai` skill](https://github.com/bhaumikmistry/bhaumik-agent-skills/tree/main/skills/not-ai)
+A Chrome (Manifest V3) extension that puts a small badge next to every post on
+**x.com / twitter.com**, scoring how much it reads like **slop** — promotional,
+essay-like, machine-flavoured writing — and showing you the exact lines that
+scored.
+
+The scoring engine is
+[`@slop-detector/slop-detector`](https://www.npmjs.com/package/@slop-detector/slop-detector),
+a standalone, dependency-free TypeScript library that ports the heuristics from
+the [`not-ai` skill](https://github.com/bhaumikmistry/bhaumik-agent-skills/tree/main/skills/not-ai)
 — the same anti-patterns the skill teaches you to *remove* are the ones we
 *detect*.
 
-![badge example](icons/icon128.png)
+> ### It is not an AI detector
+>
+> Measured against 3,500 AI-generated tweets from seven models and 20,000 real
+> human tweets:
+>
+> | | Measured |
+> |---|---|
+> | False positives on real human tweets | **0.04%** at `≥25`, **0%** at `≥50` |
+> | Recall on marketing / essay register | **~75%** |
+> | Recall on a current model writing ordinary tweets | **0.2%** — 97% scored zero |
+>
+> It finds slop reliably and almost never accuses a human wrongly. It is blind
+> to AI that writes concisely or casually, which is most AI text on social
+> media. The badge answers *"does this read like slop?"*, not *"was this written
+> by a machine?"*
+>
+> Full numbers, the rejected alternatives, and two measurement traps:
+> [EVALUATION.md](https://github.com/bhaumikmistry/slop-detector/blob/main/EVALUATION.md).
 
 ## What it does
 
