@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slop Detector — spot AI-style writing on X</title>
+<meta name="description" content="A free Chrome extension that scores every post on X for AI-style slop writing, and shows you the exact lines that scored. Open source, runs entirely in your browser.">
+<link rel="icon" href="assets/icon.png">
+<meta property="og:title" content="Slop Detector — spot AI-style writing on X">
+<meta property="og:description" content="Scores every post for AI-style slop and quotes the exact lines. Free, open source, nothing leaves your browser.">
+<meta property="og:image" content="assets/badge.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap hero__grid">
+    <div>
+      <img class="hero__icon" src="assets/icon.png" alt="" width="72" height="72">
+      <h1>Spot the slop.</h1>
+      <p class="lede">
+        A free Chrome extension that scores every post on X for
+        <strong>AI-style writing</strong> — and shows you the exact lines that scored.
+      </p>
+      <div class="cta">
+        <a class="btn btn--primary" href="https://github.com/bhaumikmistry/slop-detector-extension">Get it on GitHub</a>
+        <a class="btn" href="https://github.com/bhaumikmistry/slop-detector/blob/main/EVALUATION.md">Read the evaluation</a>
+      </div>
+      <p class="fineprint">
+        Free and MIT licensed. No accounts, no tracking, no network calls —
+        everything runs in your browser.
+      </p>
+    </div>
+
+    <!-- The pitch is the demo: you can't tell by eye, so let people try. -->
+    <section class="guess" aria-labelledby="guess-h">
+      <h2 id="guess-h" class="guess__h">One of these was written by a machine.</h2>
+      <p class="guess__sub">Pick the one you think is AI.</p>
+      <div class="cards" id="cards"></div>
+      <div class="guess__foot">
+        <button class="btn btn--ghost" id="next" type="button">Try another pair →</button>
+        <span class="tally" id="tally"></span>
+      </div>
+    </section>
+  </div>
+</header>
+
+<main>
+
+<section class="band">
+  <div class="wrap">
+    <h2>Paste anything.</h2>
+    <p class="sub">The same engine the extension uses, running here in this page.</p>
+    <textarea id="try" rows="4" spellcheck="false"
+      placeholder="Paste a post, an email, a paragraph of your own writing…">In the realm of technology, this groundbreaking platform serves as a testament to innovation. It's not just a tool, but a vibrant tapestry of possibilities.</textarea>
+    <div id="try-out" class="tryout"></div>
+  </div>
+</section>
+
+<section class="band band--alt">
+  <div class="wrap split">
+    <div>
+      <h2>It shows its work.</h2>
+      <p class="sub">
+        Every score is broken down into the signals that produced it, each one
+        quoting the line it found and naming why it's a tell. Nothing is asserted
+        without evidence you can read and disagree with.
+      </p>
+      <ul class="ticks">
+        <li>Scores each post 0–100 as you scroll</li>
+        <li>Click any badge for the breakdown</li>
+        <li>Clean posts get a quiet tick, not a chip</li>
+      </ul>
+    </div>
+    <figure>
+      <img src="assets/demo.gif" alt="Badges appearing next to posts in a timeline" loading="lazy">
+    </figure>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <h2>What it actually does — and doesn't.</h2>
+    <p class="sub">
+      Measured against 20,000 real human tweets and 3,500 AI-generated tweets
+      from seven models.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat__n">0.04%</span>
+        <span class="stat__l">false positives on 20,000 real human tweets</span>
+      </div>
+      <div class="stat">
+        <span class="stat__n">~75%</span>
+        <span class="stat__l">recall on marketing and essay register</span>
+      </div>
+      <div class="stat stat--warn">
+        <span class="stat__n">0.2%</span>
+        <span class="stat__l">recall when a model writes an ordinary tweet</span>
+      </div>
+    </div>
+    <p class="honest">
+      <strong>This is not an AI detector.</strong> It finds slop register reliably
+      and almost never accuses a human wrongly. It is blind to AI that writes
+      casually — 97% of a 500-tweet set from a current model scored zero. The badge
+      answers <em>“does this read like slop?”</em>, not <em>“was this written by a
+      machine?”</em> The failures are published alongside the wins.
+      <a href="https://github.com/bhaumikmistry/slop-detector/blob/main/EVALUATION.md">Read the full evaluation →</a>
+    </p>
+  </div>
+</section>
+
+<section class="band band--alt">
+  <div class="wrap split">
+    <div>
+      <h2>Use the engine anywhere.</h2>
+      <p class="sub">
+        The scoring library is a separate package with zero dependencies. No model,
+        no API calls — a few hundred regexes and a scoring curve, about 0.03ms per
+        post.
+      </p>
+      <pre class="code"><code>npm i @slop-detector/slop-detector</code></pre>
+      <pre class="code"><code>npx @slop-detector/slop-detector "your text here"</code></pre>
+      <p class="fineprint">
+        Also works as a CI gate: <code>--fail-over 50</code> exits non-zero.
+      </p>
+    </div>
+    <figure>
+      <img src="assets/panel-human.png" alt="The breakdown panel showing a low score with the line that triggered it" loading="lazy">
+    </figure>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>MIT © Bhaumik Mistry</span>
+    <nav>
+      <a href="https://github.com/bhaumikmistry/slop-detector-extension">Extension</a>
+      <a href="https://github.com/bhaumikmistry/slop-detector">Library</a>
+      <a href="https://www.npmjs.com/package/@slop-detector/slop-detector">npm</a>
+      <a href="https://github.com/bhaumikmistry/slop-detector-extension/blob/main/PRIVACY.md">Privacy</a>
+    </nav>
+  </div>
+  <p class="wrap disclaimer">
+    Not affiliated with, endorsed by, or sponsored by X Corp. A heuristic estimate
+    of writing style — please don’t use it to accuse anyone of anything.
+  </p>
+</footer>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

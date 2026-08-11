@@ -15,7 +15,8 @@
     "test": "npm run build && tsx --test src/content/*.test.ts",
     "typecheck": "tsc --noEmit",
     "package": "npm run build && node package.mjs",
-    "demo": "npm run build && node demo/serve.mjs"
+    "demo": "npm run build && node demo/serve.mjs",
+    "sync:docs": "cp node_modules/@slop-detector/slop-detector/dist/index.mjs docs/assets/slop-detector.js && echo synced docs/assets/slop-detector.js"
   },
   "devDependencies": {
     "@types/jsdom": "^28.0.3",
