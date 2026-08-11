@@ -1,4 +1,8 @@
-# Slop Detector — spot AI-style slop writing
+<p align="center">
+  <img src="icons/icon128.png" alt="Slop Detector" width="128" height="128">
+</p>
+
+<h1 align="center">Slop Detector — spot AI-style slop writing</h1>
 
 A Chrome (Manifest V3) extension that puts a small badge next to every post on
 **x.com / twitter.com**, scoring how much it reads like **slop** — promotional,
