@@ -4,6 +4,30 @@
 
 <h1 align="center">Slop Detector — spot AI-style slop writing</h1>
 
+<p align="center">
+  <a href="https://bhaumikmistry.github.io/slop-detector-extension/"><strong>Try it live →</strong></a>
+  ·
+  <a href="https://github.com/bhaumikmistry/slop-detector/blob/main/EVALUATION.md">Evaluation</a>
+  ·
+  <a href="https://www.npmjs.com/package/@slop-detector/slop-detector">npm</a>
+</p>
+
+<p align="center">
+  <img src="docs/assets/demo.gif" alt="Badges appearing next to posts as the timeline scrolls" width="420">
+</p>
+
+<p align="center">
+  <img src="docs/assets/badge.png" alt="A post scored 87% with the badge in the action row" width="620">
+</p>
+
+<p align="center">
+  <em>Click any badge and it shows its work — the signals that fired, and the exact line each one found.</em>
+</p>
+
+<p align="center">
+  <img src="docs/assets/panel-human.png" alt="The breakdown panel showing a low score and the single line that triggered it" width="560">
+</p>
+
 A Chrome (Manifest V3) extension that puts a small badge next to every post on
 **x.com / twitter.com**, scoring how much it reads like **slop** — promotional,
 essay-like, machine-flavoured writing — and showing you the exact lines that
