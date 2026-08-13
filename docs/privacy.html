@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — Slop Detector</title>
+<meta name="description" content="Slop Detector collects nothing, stores nothing, and sends nothing anywhere. Everything runs locally in your browser.">
+<style>
+  body {
+    max-width: 46rem; margin: 0 auto; padding: 2.5rem 1.25rem 4rem;
+    background: #fdfdf8; color: #111;
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  h1 { font-size: 1.9rem; line-height: 1.15; margin: 0 0 .5rem; }
+  h2 { font-size: 1.25rem; margin: 2rem 0 .5rem; }
+  h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; }
+  p, li { margin: 0 0 .75rem; }
+  ul { padding-left: 1.25rem; }
+  a { color: #b13c00; }
+  code { background: #efefe8; padding: .1em .3em; border-radius: 3px; font-size: .9em; }
+  pre { background: #111; color: #eee; padding: .9rem 1rem; overflow-x: auto; border-radius: 4px; }
+  pre code { background: none; color: inherit; padding: 0; }
+  hr { border: 0; border-top: 1px solid #ddd; margin: 2rem 0; }
+  .updated { color: #666; font-size: .9rem; margin-bottom: 2rem; }
+</style>
+</head>
+<body>
+<h1>Privacy Policy — Slop Detector</h1>
+<p class="updated">Plain-text version: <a href="privacy.txt">privacy.txt</a> ·
+Source: <a href="https://github.com/bhaumikmistry/slop-detector-extension/blob/main/PRIVACY.md">PRIVACY.md</a></p>
+<p><strong>Last updated:</strong> 7 August 2026</p>
+<h2>The short version</h2>
+<p>Slop Detector collects nothing, stores nothing, and sends nothing anywhere.</p>
+<p>Every part of it runs locally in your browser tab. There is no server, no account, no analytics, and no telemetry of any kind. The extension has no way to transmit data even if it wanted to — it requests no network permissions and the shipped code contains no networking calls at all.</p>
+<h2>What the extension does</h2>
+<p>When you view a post on <code>x.com</code> or <code>twitter.com</code>, Slop Detector reads the text of that post from the page you are already looking at, runs it through a set of pattern-matching rules on your own machine, and displays a small score badge next to it. Clicking the badge shows which patterns matched.</p>
+<p>That is the whole of it. The post text is held in memory only for as long as it takes to score it, and is never written to disk, saved to browser storage, or transmitted.</p>
+<h2>What is collected</h2>
+<p>Nothing.</p>
+<ul>
+  <li><strong>No personal information.</strong> Not your name, email, account, or identity.</li>
+  <li><strong>No browsing history.</strong> The extension does not record which posts you view,</li>
+</ul>
+<p>  which accounts you visit, or anything else about your session.</p>
+<ul>
+  <li><strong>No content.</strong> Post text is scored in memory and discarded. It is never</li>
+</ul>
+<p>  stored or sent.</p>
+<ul>
+  <li><strong>No analytics or telemetry.</strong> No usage statistics, no crash reports, no</li>
+</ul>
+<p>  fingerprinting, no advertising identifiers.</p>
+<ul>
+  <li><strong>No cookies.</strong> The extension sets none and reads none.</li>
+</ul>
+<h2>What is shared or sold</h2>
+<p>Nothing, because nothing is collected. No data is shared with the developer, with any third party, or with any service. Nothing is sold, transferred, or used for advertising, credit assessment, or any purpose unrelated to the extension's single function.</p>
+<h2>Permissions</h2>
+<p>The extension requests <strong>no Chrome permissions at all</strong> — its <code>permissions</code> and <code>host_permissions</code> lists are both empty.</p>
+<p>It declares two content-script matches, <code>https://x.com/*</code> and <code>https://twitter.com/*</code>, which are what allow it to read post text on those sites and place a badge next to each post. It cannot run on, read, or affect any other website.</p>
+<h2>Verifying this yourself</h2>
+<p>You do not have to take our word for any of the above. The extension is open source under the MIT license:</p>
+<p><strong>https://github.com/bhaumikmistry/slop-detector-extension</strong></p>
+<p>The claims on this page are mechanically checkable against the shipped build:</p>
+<pre><code># No networking, no storage, no dynamic code execution:
+grep -c "fetch(\|XMLHttpRequest\|WebSocket\|sendBeacon" dist/content.js   # 0
+grep -c "localStorage\|sessionStorage\|indexedDB\|chrome.storage" dist/content.js  # 0
+grep -c "eval(\|new Function" dist/content.js                            # 0</code></pre>
+<p>The scoring engine is a separate open-source package, <a href="https://www.npmjs.com/package/@slop-detector/slop-detector"><code>@slop-detector/slop-detector</code></a>, which is likewise dependency-free and makes no network calls.</p>
+<h2>Children's privacy</h2>
+<p>The extension collects no data from anyone, including children under 13.</p>
+<h2>Changes to this policy</h2>
+<p>If the extension's behaviour ever changes in a way that affects this policy, the policy will be updated here and the change recorded in the repository's commit history, which is public and timestamped. Any future version that collected data would require new permissions, which Chrome would surface to you before the update installed.</p>
+<h2>Contact</h2>
+<p>Questions or concerns: open an issue at</p>
+<p><strong>https://github.com/bhaumikmistry/slop-detector-extension/issues</strong></p>
+</body>
+</html>
