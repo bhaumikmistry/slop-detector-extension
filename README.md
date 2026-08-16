@@ -5,7 +5,9 @@
 <h1 align="center">Slop Detector — spot AI-style slop writing</h1>
 
 <p align="center">
-  <a href="https://bhaumikmistry.github.io/slop-detector-extension/"><strong>Try it live →</strong></a>
+  <a href="https://chromewebstore.google.com/detail/slop-detector-%E2%80%94-spot-ai-s/ekoihcfoakjdibdgdgfnbjaigdpfofhi"><strong>Add to Chrome →</strong></a>
+  ·
+  <a href="https://bhaumikmistry.github.io/slop-detector-extension/">Try it live</a>
   ·
   <a href="https://github.com/bhaumikmistry/slop-detector/blob/main/EVALUATION.md">Evaluation</a>
   ·

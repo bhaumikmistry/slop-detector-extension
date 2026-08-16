@@ -3,6 +3,8 @@
 Everything the submission form asks for, written out. Paste from here rather
 than composing in the form, so the wording stays consistent across resubmissions.
 
+**LIVE:** https://chromewebstore.google.com/detail/slop-detector-%E2%80%94-spot-ai-s/ekoihcfoakjdibdgdgfnbjaigdpfofhi
+
 Privacy policy URL:
 `https://github.com/bhaumikmistry/slop-detector-extension/blob/main/PRIVACY.md`
 
